@@ -1,5 +1,5 @@
 ﻿import json
-from typing import TypeVar, List
+from typing import TypeVar, List, LiteralString
 
 T = TypeVar('T')
 
