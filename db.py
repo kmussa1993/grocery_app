@@ -5,10 +5,11 @@ def read_items():
         with open('storage/items.json') as f:
             grocery_items = json.load(f)
         return grocery_items
-    except FileNotFoundError as e:
-        raise FileNotFoundError(f"Error: {e}. The file 'storage/items.json' was not found.")
-    except json.JSONDecodeError as e:
-        raise json.JSONDecodeError(f"Error: {e}. Failed to decode JSON from 'storage/items.json'.")
+    except* (FileNotFoundError, json.JSONDecodeError) as e:
+        if isinstance(e, FileNotFoundError):
+            raise FileNotFoundError(f"Error: {e}. The file 'storage/items.json' was not found.")
+        elif isinstance(e, json.JSONDecodeError):
+            raise json.JSONDecodeError(f"Error: {e}. Failed to decode JSON from 'storage/items.json'.")
 
 def write_items(grocery_items):
     try:
