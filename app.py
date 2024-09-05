@@ -14,7 +14,7 @@ def get_grocery_items():
         grocery_items = read_items()
         items = [{"id": item["id"], "name": item["name"], "price": item["price"]} for item in grocery_items]
         return jsonify(items)
-    except Exception as e:
+    except* Exception as e:
         # Provide detailed traceback information for debugging
         import traceback
         return jsonify({"error": str(e), "traceback": traceback.format_exc()}), 500
@@ -29,7 +29,7 @@ def add_grocery_item():
             grocery_items.append(new_item)
             write_items(grocery_items)
         return "Successfully added item", 201
-    except Exception as e:
+    except* Exception as e:
         # Provide detailed traceback information for debugging
         import traceback
         return jsonify({"error": str(e), "traceback": traceback.format_exc()}), 500
@@ -41,7 +41,7 @@ def delete_grocery_item(item_id):
         grocery_items = [item for item in grocery_items if item["id"] != item_id]
         write_items(grocery_items)
         return "Successfully deleted item", 200
-    except Exception as e:
+    except* Exception as e:
         # Provide detailed traceback information for debugging
         import traceback
         return jsonify({"error": str(e), "traceback": traceback.format_exc()}), 500
@@ -50,7 +50,7 @@ def delete_grocery_item(item_id):
 def hash_password(password):
     try:
         return hashpw(password.encode('utf-8'), gensalt()).decode('utf-8')
-    except Exception as e:
+    except* Exception as e:
         # Provide detailed traceback information for debugging
         import traceback
         return jsonify({"error": str(e), "traceback": traceback.format_exc()}), 500
