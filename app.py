@@ -5,11 +5,11 @@ from db import read_items, write_items
 app = Flask(__name__)
 
 @app.route('/', methods=['GET'])
-def hello_world():
+def hello_world() -> str:
     return "Hello World!"
 
 @app.route('/grocery_items', methods=['GET'])
-def get_grocery_items():
+def get_grocery_items() -> jsonify:
     try:
         grocery_items = read_items()
         items = [{"id": item["id"], "name": item["name"], "price": item["price"]} for item in grocery_items]
@@ -21,7 +21,7 @@ def get_grocery_items():
         return jsonify({"error": str(e), "traceback": traceback.format_exc()}), 500
 
 @app.route('/grocery_items', methods=['POST'])
-def add_grocery_item():
+def add_grocery_item() -> tuple[str, int]:
     try:
         new_item = request.json
         print(new_item["id"], new_item, flush=True)
@@ -37,7 +37,7 @@ def add_grocery_item():
         return jsonify({"error": str(e), "traceback": traceback.format_exc()}), 500
 
 @app.route('/grocery_items/<int:item_id>', methods=['DELETE'])
-def delete_grocery_item(item_id):
+def delete_grocery_item(item_id: int) -> tuple[str, int]:
     try:
         grocery_items = read_items()
         grocery_items = [item for item in grocery_items if item["id"] != item_id]
@@ -50,7 +50,7 @@ def delete_grocery_item(item_id):
         return jsonify({"error": str(e), "traceback": traceback.format_exc()}), 500
 
 @app.route('/hashpassword/<string:password>', methods=['GET'])
-def hash_password(password):
+def hash_password(password: str) -> str:
     try:
         return hashpw(password.encode('utf-8'), gensalt()).decode('utf-8')
     except Exception as e:
