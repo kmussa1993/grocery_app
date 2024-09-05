@@ -15,7 +15,9 @@ def get_grocery_items():
         items = [{"id": item["id"], "name": item["name"], "price": item["price"]} for item in grocery_items]
         return jsonify(items)
     except Exception as e:
-        return str(e), 500  # Ensure the exception is converted to a string for a valid response
+        # Provide detailed traceback information for debugging
+        import traceback
+        return jsonify({"error": str(e), "traceback": traceback.format_exc()}), 500
 
 @app.route('/grocery_items', methods=['POST'])
 def add_grocery_item():
@@ -28,7 +30,9 @@ def add_grocery_item():
             write_items(grocery_items)
         return "Successfully added item", 201
     except Exception as e:
-        return str(e), 500  # Ensure the exception is converted to a string for a valid response
+        # Provide detailed traceback information for debugging
+        import traceback
+        return jsonify({"error": str(e), "traceback": traceback.format_exc()}), 500
 
 @app.route('/grocery_items/<int:item_id>', methods=['DELETE'])
 def delete_grocery_item(item_id):
@@ -38,14 +42,18 @@ def delete_grocery_item(item_id):
         write_items(grocery_items)
         return "Successfully deleted item", 200
     except Exception as e:
-        return str(e), 500  # Ensure the exception is converted to a string for a valid response
+        # Provide detailed traceback information for debugging
+        import traceback
+        return jsonify({"error": str(e), "traceback": traceback.format_exc()}), 500
 
 @app.route('/hashpassword/<string:password>', methods=['GET'])
 def hash_password(password):
     try:
         return hashpw(password.encode('utf-8'), gensalt()).decode('utf-8')
     except Exception as e:
-        return str(e), 500  # Ensure the exception is converted to a string for a valid response
+        # Provide detailed traceback information for debugging
+        import traceback
+        return jsonify({"error": str(e), "traceback": traceback.format_exc()}), 500
 
 if __name__ == '__main__':
     app.run(debug=True)
