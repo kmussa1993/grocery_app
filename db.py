@@ -1,4 +1,4 @@
-import json
+﻿import json
 
 def read_items():
     with open('storage/items.json') as f:
