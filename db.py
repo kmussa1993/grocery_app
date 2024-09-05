@@ -1,6 +1,9 @@
 ﻿import json
+from typing import TypeVar, List
 
-def read_items():
+T = TypeVar('T')
+
+def read_items() -> List[T]:
     try:
         with open('storage/items.json') as f:
             grocery_items = json.load(f)
@@ -13,7 +16,7 @@ def read_items():
             e.add_note("Failed to decode JSON from 'storage/items.json'.")
             raise
 
-def write_items(grocery_items):
+def write_items(grocery_items: List[T]) -> None:
     try:
         with open('storage/items.json', 'w') as f:
             json.dump(grocery_items, f)
