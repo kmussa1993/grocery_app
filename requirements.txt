@@ -1,2 +1,2 @@
-flask
-bcrypt
+﻿flask>=2.2.0
+bcrypt>=3.2.0
