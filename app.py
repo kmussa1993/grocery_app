@@ -1,7 +1,7 @@
 ﻿from flask import Flask, request, jsonify
 from bcrypt import hashpw, gensalt
 from db import read_items, write_items
-from typing import LiteralString
+from typing import Annotated
 
 app = Flask(__name__)
 
@@ -50,8 +50,8 @@ def delete_grocery_item(item_id: int) -> tuple[str, int]:
         e.add_note("Error occurred while deleting a grocery item.")
         return jsonify({"error": str(e), "traceback": traceback.format_exc()}), 500
 
-@app.route('/hashpassword/<LiteralString:password>', methods=['GET'])
-def hash_password(password: LiteralString) -> str:
+@app.route('/hashpassword/<Annotated[str, "password"]>', methods=['GET'])
+def hash_password(password: Annotated[str, "password"]) -> str:
     try:
         return hashpw(password.encode('utf-8'), gensalt()).decode('utf-8')
     except Exception as e:
